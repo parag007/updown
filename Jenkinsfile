@@ -12,11 +12,7 @@ pipeline {
 
       }
 
-      post {
-             success {
-                archiveArtifacts artifacts: 'rectangle.jar', fingerprint:true
-             }
-           }
+
      }
 
 
@@ -28,28 +24,12 @@ pipeline {
          }
 
          }
-       stage('Promote Development to Master') {
-       when {
-        branch 'development'
-
-            }
-            steps {
-
-                echo "Stashing Local Changes"
-                sh "git stash"
-                echo "Checking Out Development"
-                sh 'git checkout development'
-                sh 'git pull origin'
-                echo 'Checking Out Master'
-                sh 'git checkout master'
-                echo "Merging Development into Master"
-                sh 'git merged development'
-                echo "Git Push to origin"
-                sh 'git push origin master'
-                }
-
-       }
-   }
+         }
+          post {
+                      success {
+                         archiveArtifacts artifacts: 'rectangle.jar', fingerprint:true
+                      }
+                    }
 
    }
 
